@@ -20,21 +20,24 @@ struct Model
     end
 end
 
-function picker!(model::Model)
+function picker!(model::Model,index::Int)
     A = model.A
     B = model.B
-    p=rand(UInt16)%(length(A)+length(B))
-    if p > length(A)
-        B[p-length(A)] = -B[p-length(A)]
+    if index > length(A)
+        B[index-length(A)] = -B[index-length(A)]
     else 
-        A[p] = -A[p]
+        A[index] = -A[index]
     end
+end
+
+function random_index(model::Model)
+    return Int(rand(UInt128)%(length(model.A)+length(model.B)))+1
 end
 
 function output(model::Model,target::Target,vectors::Array{SpinValueType,2})
     temp = vectors
-    for i in 1:1:3
-        temp = model.A[:,:,i]*temp + model.B[:,i] + target.C[:,i]
+    for i in 1:1:layers
+        temp = model.A[:,:,i]*temp .+ model.B[:,i] .+ target.C[:,i]
         temp = sign.(temp)
     end
     return temp
@@ -42,13 +45,27 @@ end
 
 function output(target::Target,vectors::Array{SpinValueType,2})
     temp = vectors
-    for i in 1:1:3
-        temp = target.A[:,:,i]*temp + target.B[:,i] + target.C[:,i]
+    for i in 1:1:layers
+        temp = target.A[:,:,i]*temp .+ target.B[:,i] .+ target.C[:,i]
+        temp = sign.(temp)
     end 
+    return temp
 end
 
-function energy(model::Model,target::Target,vectors::Array{SpinValueType,2})
-    output = output(model,target,vectors)
+function cal_energy(model::Model,target::Target,vectors::Array{SpinValueType,2})
+    model_output = output(model,target,vectors)
     target_output = output(target,vectors)
-    return sum(abs.(output-target_output))/2
+    return sum(abs.(model_output-target_output))/2
+end
+
+function create_bit_verctor(dim::Int)
+    temp_array = Array{SpinValueType}(UndefInitializer(),dim,2^dim)
+    for i in 1:1:2^dim
+        temp = i
+        for j in 1:1:dim     
+            temp_array[j,i] = (temp % 2)
+            temp >>= 1
+        end
+    end
+    return SpinValueType.(2*temp_array.-1)
 end
