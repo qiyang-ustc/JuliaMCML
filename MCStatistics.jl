@@ -43,10 +43,11 @@ function normalize_factor(spectrum::Spectrum)
     return 1
 end
 
-function process_spectrum(spectrum::Spectrum,ground_value::Float64)
+function process_spectrum(spectrum::Spectrum,ground_value::Real)
     for i in 1:spectrum.length
         if spectrum.factor[i]<ground_value
             spectrum.factor[i]=0
         end
     end
+    return 1
 end

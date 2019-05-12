@@ -69,3 +69,37 @@ function create_bit_verctor(dim::Int)
     end
     return SpinValueType.(2*temp_array.-1)
 end
+
+function set_target!(target::Target)
+    include(".\\target.jl")
+    for i in 1:1:layers
+        for j in 1:1:dim
+            target.B[j,i] = B[j,i]
+            target.C[j,i] = C[j,i]
+        end
+    end
+    for i in 1:1:layers
+        for j in 1:1:dim
+            for k in 1:1:dim
+                target.A[j,k,i] = A[j,k,i]
+            end
+        end
+    end
+end
+
+
+function set_target!(target::Target,A::Array{SpinValueType,3},B::Array{SpinValueType,2},C::Array{Float64,2})
+    for i in 1:1:layers
+        for j in 1:1:dim
+            target.B[j,i] = B[j,i]
+            target.C[j,i] = C[j,i]
+        end
+    end
+    for i in 1:1:layers
+        for j in 1:1:dim
+            for k in 1:1:dim
+                target.A[j,k,i] = A[j,k,i]
+            end
+        end
+    end
+end

@@ -1,25 +1,11 @@
 using Random
 using LinearAlgebra
-abspath("D:\\IOPHY\\jmc\\")
-#----Global Constant Parameters Settings
-Random.seed!(12345)
-const SpinValueType = Int8
-const layers = 3
-const dim = 3
-const Nsamp = 1000
-const Nblck = 1024
-const CUT_ENERGY = 100  # the value in WangLandau for cut off low degeneracy state
- #----Global Variables
 
- #number of A,B,Vectors, and normailzation coefficient
-const NA = layers*dim^2 
-const NB = layers*dim
-const NV = 2^dim
-const NC = 1/(NV*dim)
-const Jcp = collect(Float64,0:1:1)
+#----Global Constant Parameters Settings
+include(".\\global.jl")
 #-------------------
 #dispatched project-depended files:
-include("utils.jl")
+#include("utils.jl")
 include("MCStatistics.jl")
 include("MCModel.jl")
 function mcml(factor::Float64)
@@ -33,6 +19,9 @@ quantity = zeros(Float64,Nsamp)
 observables = zeros(Float64,Nblck)
 energy_spectrum = Spectrum(2^dim*dim+1)
 set_ground!(energy_spectrum,0)
+set_target!(target)
+#TODO: = []
+
 #---Monte Carlo Simulation----
 energy = Int(cal_energy(model,target,vectors))
 for iblck in 1:1:Nblck
@@ -51,8 +40,11 @@ for iblck in 1:1:Nblck
 end
 process_spectrum(energy_spectrum,-100.0)
 normalize_factor(energy_spectrum)
-@show exp.(energy_spectrum.factor)
 
+energy = collect(0.0:1.0:2.0^dim*dim)
+for i in 1:1:length(energy_spectrum.factor)
+   print(energy[i],"    ",exp.(energy_spectrum.factor[i]),"\n") 
 end
 
+end
 mcml(0.01)
