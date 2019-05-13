@@ -38,13 +38,15 @@ for iblck in 1:1:Nblck
         end
     end
 end
-process_spectrum(energy_spectrum,-100.0)
+process_spectrum(energy_spectrum,-1000.0)
 normalize_factor(energy_spectrum)
 
 energy = collect(0.0:1.0:2.0^dim*dim)
+
 for i in 1:1:length(energy_spectrum.factor)
    print(energy[i],"    ",exp.(energy_spectrum.factor[i]),"\n") 
 end
 
+@show check_converge(model,target,energy_spectrum,vectors)
 end
-mcml(0.01)
+mcml(0.1)

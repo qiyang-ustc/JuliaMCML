@@ -46,7 +46,7 @@ end
 function process_spectrum(spectrum::Spectrum,ground_value::Real)
     for i in 1:spectrum.length
         if spectrum.factor[i]<ground_value
-            spectrum.factor[i]=0
+            spectrum.factor[i]-=Inf
         end
     end
     return 1

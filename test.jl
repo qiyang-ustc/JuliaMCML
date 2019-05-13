@@ -17,7 +17,6 @@ include(".\\MCStatistics.jl")
     @test normalize_factor(test_spectrum)==1
     @test process_spectrum(test_spectrum,-1)==1
     @test maximum(test_spectrum.factor)≈0.0
-    @show exp.(test_spectrum.factor)
     @test minimum(exp.(test_spectrum.factor))≈0.0
 end
 

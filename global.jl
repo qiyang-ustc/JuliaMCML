@@ -2,10 +2,11 @@ Random.seed!(12345)
 const SpinValueType = Int8
 const layers = 3
 const dim = 3
-const Nsamp = 100000
+const Nsamp = 10000
 const Nblck = 1024
 const CUT_ENERGY = 100  # the value in WangLandau for cut off low degeneracy state
- #----Global Variables
+const LENGTH_OF_CONVERGENCE_CHECK = 100000
+#----Global Variables
 
  #number of A,B,Vectors, and normailzation coefficient
 const NA = layers*dim^2 
