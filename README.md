@@ -1,11 +1,5 @@
 ## Julia MCML
 
-### Path Setting: 
-
-The second line in "mcml.jl": 
-
-modify  `abspath("D:\\IOPHY\\jmc\\")` to your path 
-
 ### Global Settings: 
 
 in "global.jl"
@@ -33,7 +27,7 @@ const Jcp = collect(Float64,0:1:1)
 ```
 
 ### Target Setting:
-
+In "target.jl"
 Set **target** by modifying
 
 ```julia
@@ -49,14 +43,15 @@ C[:,3] = [-0.5;0.5;-0.5]
 ```
 
 ### factor for Wang-Landau
-The last line in mcml.jl:
+The last line in "mcml.jl":
 ```
 mcml(0.0000001)
 ```
 
 ### Run
 Run mcml.jl in terminal:
-```julia mcml.jl 
+```julia
+julia mcml.jl 
 ```
 is ok
 
