@@ -1,11 +1,5 @@
 ## Julia MCML
 
-### Path Setting: 
-
-The second line in "mcml.jl": 
-
-modify  `abspath("D:\\IOPHY\\jmc\\")` to your path 
-
 ### Global Settings: 
 
 in "global.jl"
