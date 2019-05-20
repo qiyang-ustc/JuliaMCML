@@ -44,8 +44,9 @@ function normalize_factor(spectrum::Spectrum)
 end
 
 function process_spectrum(spectrum::Spectrum,ground_value::Real)
+    max_factor = maximum(spectrum.factor)
     for i in 1:spectrum.length
-        if spectrum.factor[i]<ground_value
+        if spectrum.factor[i]<(ground_value+max_factor)
             spectrum.factor[i]-=Inf
         end
     end

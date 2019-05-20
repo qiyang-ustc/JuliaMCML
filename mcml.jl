@@ -30,15 +30,14 @@ for iblck in 1:1:Nblck
         picker!(model,index)
         new_energy =  Int(cal_energy(model,target,vectors))
         if rand()<exp(get_factor(energy_spectrum,energy)-get_factor(energy_spectrum,new_energy)) #accept the move 
-            add_factor!(energy_spectrum,new_energy,factor)
             energy = new_energy
         else 
             picker!(model,index)
-            add_factor!(energy_spectrum,energy,factor)
         end
+        add_factor!(energy_spectrum,energy,factor)
     end
 end
-process_spectrum(energy_spectrum,-1000.0)
+process_spectrum(energy_spectrum,-100.0)
 normalize_factor(energy_spectrum)
 
 energy = collect(0.0:1.0:2.0^dim*dim)
@@ -49,4 +48,4 @@ end
 
 @show check_converge(model,target,energy_spectrum,vectors)
 end
-mcml(0.1)
+mcml(0.0000001)
