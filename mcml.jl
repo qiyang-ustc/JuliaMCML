@@ -68,4 +68,4 @@ function check_converge(model::Model,target::Target,energy_spectrum::Spectrum,ve
 end
 @show check_converge(model,target,energy_spectrum,vectors)
 end
-mcml(0.0000001)
+mcml(0.1)
