@@ -48,5 +48,17 @@ C[:,2] = [0.5;0.5;0.5]
 C[:,3] = [-0.5;0.5;-0.5]
 ```
 
+### factor for Wang-Landau
+The last line in mcml.jl:
+```
+mcml(0.0000001)
+```
+
+### Run
+Run mcml.jl in terminal:
+```julia mcml.jl 
+```
+is ok
+
 
 

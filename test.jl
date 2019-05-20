@@ -2,8 +2,8 @@ using Test
 const SpinValueType = Int8
 const layers = 3
 const dim = 3
-include(".\\MCModel.jl")
-include(".\\MCStatistics.jl")
+include("./MCModel.jl")
+include("./MCStatistics.jl")
 
 @testset "spectrum.jl" begin
     test_spectrum = Spectrum(10)

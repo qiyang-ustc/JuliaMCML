@@ -103,24 +103,3 @@ function set_target!(target::Target,A::Array{SpinValueType,3},B::Array{SpinValue
         end
     end
 end
-
-function check_converge(model::Model,target::Target,energy_spectrum::Spectrum,vectors)
-    temp_Spectrum = deepcopy(energy_spectrum)
-    for i in 1:1:temp_Spectrum.length
-        temp_Spectrum.factor[i] = 0
-    end
-    energy = Int(cal_energy(model,target,vectors))
-    for i in 1:1:LENGTH_OF_CONVERGENCE_CHECK
-        index = random_index(model)
-        picker!(model,index)
-        new_energy =  Int(cal_energy(model,target,vectors))
-        if rand()<exp(get_factor(energy_spectrum,energy)-get_factor(energy_spectrum,new_energy)) #accept the move 
-            energy = new_energy
-            add_factor!(temp_Spectrum,energy,1.0)
-        else 
-            add_factor!(temp_Spectrum,energy,1.0)
-            picker!(model,index)
-        end
-    end
-    return temp_Spectrum.factor/maximum(temp_Spectrum.factor)
-end
