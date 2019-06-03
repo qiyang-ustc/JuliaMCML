@@ -22,7 +22,7 @@ ax1.scatter(x,y,s=20,marker='+',label="Arinana's result")
 # y = data[:,1]
 # ax1.scatter(x,y,s=20,marker='+',label="new_Julia_WL")
 
-for i in range(5,6):
+for i in range(2,6):
     data = np.loadtxt('./0.{}1.dat'.format('0'*i))
     x = data[:,0]/24
     y = data[:,1]
