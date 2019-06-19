@@ -2,8 +2,41 @@ using Test
 const SpinValueType = Int8
 const layers = 3
 const dim = 3
+const NA = layers*dim^2 
+const NB = layers*dim
+const NV = 2^dim
+const NC = 1/(NV*dim)
+
+this_is_test = true
 include("./MCModel.jl")
 include("./MCStatistics.jl")
+include("p_method.jl")
+
+@testset "information set: p_method.jl" begin
+v = Int8.([-1,-1,-1])
+@test vector2number(v,weight) == 1
+v = Int8.([ 1,-1,-1])
+@test vector2number(v,weight) == 2
+v = Int8.([-1, 1,-1])
+@test vector2number(v,weight) == 3
+v = Int8.([ 1, 1,-1])
+@test vector2number(v,weight) == 4
+v = Int8.([-1,-1, 1])
+@test vector2number(v,weight) == 5
+v = Int8.([ 1,-1, 1])
+@test vector2number(v,weight) == 6
+v = Int8.([-1, 1, 1])
+@test vector2number(v,weight) == 7
+v = Int8.([ 1, 1, 1])
+@test vector2number(v,weight) == 8
+
+for i in 1:1:2^dim
+    number2vector!(v,i)
+    @test vector2number(v,weight) == i
+end
+
+end
+
 
 @testset "spectrum.jl" begin
     test_spectrum = Spectrum(10)
