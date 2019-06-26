@@ -9,7 +9,7 @@ quantity = zeros(Float64,Nsamp)
 observables = zeros(Float64,Nblck)
 energy_spectrum = Spectrum(2^dim*dim+1)
 set_ground!(energy_spectrum,0)
-set_target!(target)
+set_target!(target)                 # IMPORTANT LINE!!!!
 #TODO: = []
 
 #---Monte Carlo Simulation----
@@ -69,7 +69,8 @@ function mcml(Jcp::Float64)
     quantity = zeros(Float64,Nsamp,Nmea)
     observables = zeros(Float64,Nblck,Nobs)
     #include("p_method.jl")
-
+    
+    set_target!(target) # NEVER MISS THIS LINE!!!!!!!!!!
 #p_method
 # This jl file include an easy - optional way to measure p
     p = zeros(Int128,layers+1,layers+1,NV,NV)
@@ -122,17 +123,16 @@ function print_p(temp::Array{Int128,4})
             p[i,j,:,:] = temp[i,j,:,:]./sum(temp[i,j,:,:])
         end
     end
-
     s01 = -sum(log.(p[1,2,:,:]).*p[1,2,:,:])
     s02 = -sum(log.(p[1,3,:,:]).*p[1,3,:,:])
     s03 = -sum(log.(p[1,4,:,:]).*p[1,4,:,:])
     s12 = -sum(log.(p[2,3,:,:]).*p[2,3,:,:])
     s13 = -sum(log.(p[2,4,:,:]).*p[2,4,:,:])
     s23 = -sum(log.(p[3,4,:,:]).*p[3,4,:,:])
-    s0 = -sum(log.(sum(p[1,2,:,:],dims=2)).*sum(p[1,2,:,:],dims=1))
-    s1 = -sum(log.(sum(p[1,2,:,:],dims=1)).*sum(p[1,2,:,:],dims=2))
-    s2 = -sum(log.(sum(p[3,4,:,:],dims=2)).*sum(p[3,4,:,:],dims=1))
-    s3 = -sum(log.(sum(p[3,4,:,:],dims=1)).*sum(p[3,4,:,:],dims=2))
+    s0 = -sum(log.(sum(p[1,2,:,:],dims=2)).*sum(p[1,2,:,:],dims=2))
+    s1 = -sum(log.(sum(p[1,2,:,:],dims=1)).*sum(p[1,2,:,:],dims=1))
+    s2 = -sum(log.(sum(p[3,4,:,:],dims=2)).*sum(p[3,4,:,:],dims=2))
+    s3 = -sum(log.(sum(p[3,4,:,:],dims=1)).*sum(p[3,4,:,:],dims=1))
 
     I01 = s0 + s1 - s01
     I02 = s0 + s2 - s02
@@ -157,12 +157,25 @@ end
 #end p_method
 
     #---Monte Carlo Simulation----
-    energy = Int(cal_energy(model,target,vectors))*NC #use NC to normalize energy to [0,1]
+    energy = cal_energy(model,target,vectors)*NC #use NC to normalize energy to [0,1]
+    for itoss in 1:1:Ntoss
+        for isamp in 1:1:Nsamp
+            index = random_index(model)
+            picker!(model,index)
+            new_energy = cal_energy(model,target,vectors)*NC
+            if rand()<exp(Jcp*(energy-new_energy))
+                energy = new_energy
+            else 
+                picker!(model,index)
+            end
+        end
+    end
+    
     for iblck in 1:1:Nblck
         for isamp in 1:1:Nsamp
             index = random_index(model)
             picker!(model,index)
-            new_energy =  Int(cal_energy(model,target,vectors))*NC
+            new_energy = cal_energy(model,target,vectors)*NC
             if rand()<exp(Jcp*(energy - new_energy)) #accept the move 
                 energy = new_energy
             else 
@@ -178,6 +191,7 @@ end
             end
             observables[iblck,3] = observables[iblck,2] - observables[iblck,1]^2
         end
+        # print(mean(quantity[:,1]),'\n')
         normalize(quantity, observables, iblck)
     end
     statistics(observables)

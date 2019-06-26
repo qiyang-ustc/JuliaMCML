@@ -12,3 +12,5 @@ include("MCModel.jl")
 include("method.jl")
 
 mcml(0.0)
+# wanglandau(0.0001)
+

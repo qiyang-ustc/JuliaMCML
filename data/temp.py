@@ -5,8 +5,10 @@ fig,ax1 = plt.subplots(nrows=1,ncols=1,figsize=(12,5))
 
 plt.rcParams['figure.dpi'] = 600 
 data = np.loadtxt('./temp.dat')
-x = data[:,0]
-y = data[:,1]
+x = [i for i in range(0,25)]
+y = data
+# x = data[:,0]
+# y = data[:,1]
 ax1.scatter(x,y,label='temp')
 
 ax1.legend(loc='best')

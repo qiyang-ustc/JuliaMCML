@@ -77,4 +77,5 @@ for i in 1:dim
 end
 vectors = create_bit_verctor(dim)
 @test cal_energy(model,target,vectors)==0
+
 end

@@ -17,6 +17,10 @@ x = data[:,0]
 y = data[:,1]
 ax1.scatter(x,y,s=20,marker='+',label="Arinana's result")
 
+data = np.loadtxt('./wrong.dat')
+x = data[:,0]/24
+y = data[:,1]
+ax1.scatter(x,y,s=40,marker='s',label="wrong data")
 # data = np.loadtxt('./new_mc.dat')
 # x = data[:,0]/24
 # y = data[:,1]
