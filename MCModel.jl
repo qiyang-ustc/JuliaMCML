@@ -70,7 +70,7 @@ function create_bit_verctor(dim::Int)
     return SpinValueType.(2*temp_array.-1)
 end
 
-function set_target!(target::Target)
+function set_target!(target::Target) # This function should be called in simulation
     include(".\\target.jl")
     for i in 1:1:layers
         for j in 1:1:dim

@@ -40,9 +40,20 @@ function measure_p!(model::Model,target::Target,p::Array{Int128,4})
     end
 end
 
+function print_p(p::Array{Int128,4},layers::Int)
+    #This function is an implementation of the next function, as it works for layers in Z+
+        #TODO: This function need to be test 
+    for i in 1:1:layers+1
+        for j in 1:1:layers+1
+            p[i,j,:,:] = p[i,j,:,:]/sum(p[i,j,:,:])
+        end
+    end
+    print("print_p fucntion for abitary layers has not finished")
+    return 0
+end
+
 function print_p(p::Array{Int128,4})
-    #TODO: This function is only avaliable for n = 3 test!
-        #TODO:This function need to be test
+    #TODO: This function is only avaliable for layers = 3 test!
     #---- in order to save memory
     for i in 1:1:layers+1
         for j in 1:1:layers+1

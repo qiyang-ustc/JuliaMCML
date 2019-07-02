@@ -10,7 +10,6 @@ observables = zeros(Float64,Nblck)
 energy_spectrum = Spectrum(2^dim*dim+1)
 set_ground!(energy_spectrum,0)
 set_target!(target)                 # IMPORTANT LINE!!!!
-#TODO: = []
 
 #---Monte Carlo Simulation----
 energy = Int(cal_energy(model,target,vectors))
