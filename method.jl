@@ -9,7 +9,7 @@ quantity = zeros(Float64,Nsamp)
 observables = zeros(Float64,Nblck)
 energy_spectrum = Spectrum(2^dim*dim+1)
 set_ground!(energy_spectrum,0)
-set_target!(target)                 # IMPORTANT LINE!!!!
+# set_target!(target)                 # IMPORTANT LINE!!!! If you want to use random target,comment this line.
 
 #---Monte Carlo Simulation----
 energy = Int(cal_energy(model,target,vectors))
@@ -69,9 +69,9 @@ function mcml(Jcp::Float64)
     observables = zeros(Float64,Nblck,Nobs)
     #include("p_method.jl")
     
-    set_target!(target) # NEVER MISS THIS LINE!!!!!!!!!!
-#p_method
-# This jl file include an easy - optional way to measure p
+    # set_target!(target) # NEVER MISS THIS LINE!!!!!!!!!!
+    #p_method
+    # This jl file include an easy - optional way to measure p
     p = zeros(Int128,layers+1,layers+1,NV,NV)
     weight = [2^(i-1) for i = 1:1:dim]
 

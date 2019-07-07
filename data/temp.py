@@ -5,11 +5,14 @@ fig,ax1 = plt.subplots(nrows=1,ncols=1,figsize=(12,5))
 
 plt.rcParams['figure.dpi'] = 600 
 data = np.loadtxt('./temp.dat')
-x = [i for i in range(0,25)]
-y = data
-# x = data[:,0]
-# y = data[:,1]
-ax1.scatter(x,y,label='temp')
+# x = [i for i in range(0,25)]
+# y = data
+x = data[:,0]
+y = data[:,1]
+beta = 30.0
+x = x/160
+print( np.sum(x*np.exp(-beta*x)*y) / np.sum(np.exp(-beta*x)*y))
+ax1.scatter(x,y,marker='x',label='temp')
 
 ax1.legend(loc='best')
 ax1.set_title("temp_plot")
