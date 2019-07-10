@@ -10,7 +10,7 @@ data = np.loadtxt('./temp.dat')
 x = data[:,0]
 y = data[:,1]
 beta = 30.0
-x = x/160
+x = x/384
 print( np.sum(x*np.exp(-beta*x)*y) / np.sum(np.exp(-beta*x)*y))
 ax1.scatter(x,y,marker='x',label='temp')
 

@@ -182,13 +182,19 @@ end
             end
             quantity[isamp,1] = energy      
             quantity[isamp,2] = energy^2
+            quantity[isamp,3] = sum(model.A[1])
+            quantity[isamp,4] = sum(model.A[1])
+            quantity[isamp,5] = sum(model.A[1])
+            quantity[isamp,6] = sum(model.A[1])^2
+            quantity[isamp,7] = sum(model.A[1])^2
+            quantity[isamp,8] = sum(model.A[1])^2
             measure_p!(model,target,p,weight)
         end
         function normalize(quantity::Array{Float64,2},observables::Array{Float64,2},iblck::Int64)
             for imea in 1:Nmea
                 observables[iblck,imea] = mean(quantity[:,imea])
             end
-            observables[iblck,3] = observables[iblck,2] - observables[iblck,1]^2
+            # observables[iblck,9] = observables[iblck,2] - observables[iblck,1]^2
         end
         # print(mean(quantity[:,1]),'\n')
         normalize(quantity, observables, iblck)
