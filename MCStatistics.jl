@@ -57,7 +57,7 @@ function statistics(observables::Array{Float64,2})
 #observables = zeros(Float64,Nblck,Nobs)
     for iobs in 1:1:Nobs
         ave = mean(observables[:,iobs])
-        sva = sqrt(var(observables[:,iobs]))
+        sva = sqrt(var(observables[:,iobs])/(Nblck-1))
         col = cov(observables[1:Nblck-1,iobs],observables[2:Nblck,iobs])/var(observables[:,iobs])
         print(iobs,'\t',ave,'\t',sva,'\t',col,'\n')
     end

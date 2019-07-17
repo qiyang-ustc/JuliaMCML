@@ -170,6 +170,7 @@ end
         end
     end
     
+    io = open("temp.dat","w")
     for iblck in 1:1:Nblck
         for isamp in 1:1:Nsamp
             index = random_index(model)
@@ -182,12 +183,13 @@ end
             end
             quantity[isamp,1] = energy      
             quantity[isamp,2] = energy^2
-            quantity[isamp,3] = sum(model.A[1])
-            quantity[isamp,4] = sum(model.A[1])
-            quantity[isamp,5] = sum(model.A[1])
-            quantity[isamp,6] = sum(model.A[1])^2
-            quantity[isamp,7] = sum(model.A[1])^2
-            quantity[isamp,8] = sum(model.A[1])^2
+            quantity[isamp,3] = sum(model.A[:,:,1])
+            quantity[isamp,4] = sum(model.A[:,:,2])
+            quantity[isamp,5] = sum(model.A[:,:,3])
+            writedlm(io,sum(model.A[:,:,2]))
+            quantity[isamp,6] = sum(model.A[:,:,1])^2
+            quantity[isamp,7] = sum(model.A[:,:,2])^2
+            quantity[isamp,8] = sum(model.A[:,:,3])^2
             measure_p!(model,target,p,weight)
         end
         function normalize(quantity::Array{Float64,2},observables::Array{Float64,2},iblck::Int64)
@@ -199,6 +201,7 @@ end
         # print(mean(quantity[:,1]),'\n')
         normalize(quantity, observables, iblck)
     end
+    close(io)
     statistics(observables)
     print_p(p)
 end

@@ -1,12 +1,12 @@
-const random_seed = 123456
+const random_seed = 12345
 const SpinValueType = Int8
 const layers = 3
-const dim = 6
-const Nsamp = 1000000
+const dim = 5
+const Nsamp = 1000
 const Nblck = 1024
 const Ntoss = 100
 const CUT_ENERGY = 100  # the value in WangLandau for cut off low degeneracy state
-const LENGTH_OF_CONVERGENCE_CHECK = 100000
+const LENGTH_OF_CONVERGENCE_CHECK = 10000
 Random.seed!(random_seed)
 #----Global Variables
 const Nmea = 8

@@ -1,6 +1,7 @@
 using Random
 using LinearAlgebra
 using Statistics
+using DelimitedFiles
 
 #----Global Constant Parameters Settings
 include("global.jl")
@@ -12,10 +13,9 @@ include("MCModel.jl")
 include("method.jl")
 
 for beta in [0.5 2 5 10 15 20 30 40 50 60 80 100]
-    print('\nbeta=',beta,)
-    print('seed=',random_seed)
+    print("\nbeta=",beta,)
+    print(" seed=",random_seed,'\n')
     mcml(beta)
-    print('\n')
+    print("\n")
 end
 # wanglandau(0.0001)
-
