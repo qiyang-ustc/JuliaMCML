@@ -122,16 +122,16 @@ function print_p(temp::Array{Int128,4})
             p[i,j,:,:] = temp[i,j,:,:]./sum(temp[i,j,:,:])
         end
     end
-    s01 = -sum(log.(p[1,2,:,:]).*p[1,2,:,:])
-    s02 = -sum(log.(p[1,3,:,:]).*p[1,3,:,:])
-    s03 = -sum(log.(p[1,4,:,:]).*p[1,4,:,:])
-    s12 = -sum(log.(p[2,3,:,:]).*p[2,3,:,:])
-    s13 = -sum(log.(p[2,4,:,:]).*p[2,4,:,:])
-    s23 = -sum(log.(p[3,4,:,:]).*p[3,4,:,:])
-    s0 = -sum(log.(sum(p[1,2,:,:],dims=2)).*sum(p[1,2,:,:],dims=2))
-    s1 = -sum(log.(sum(p[1,2,:,:],dims=1)).*sum(p[1,2,:,:],dims=1))
-    s2 = -sum(log.(sum(p[3,4,:,:],dims=2)).*sum(p[3,4,:,:],dims=2))
-    s3 = -sum(log.(sum(p[3,4,:,:],dims=1)).*sum(p[3,4,:,:],dims=1))
+    s01 = -sum(log.(p[1,2,:,:].+1E-100).*p[1,2,:,:])
+    s02 = -sum(log.(p[1,3,:,:].+1E-100).*p[1,3,:,:])
+    s03 = -sum(log.(p[1,4,:,:].+1E-100).*p[1,4,:,:])
+    s12 = -sum(log.(p[2,3,:,:].+1E-100).*p[2,3,:,:])
+    s13 = -sum(log.(p[2,4,:,:].+1E-100).*p[2,4,:,:])
+    s23 = -sum(log.(p[3,4,:,:].+1E-100).*p[3,4,:,:])
+    s0 = -sum(log.(sum(p[1,2,:,:],dims=2).+1E-100).*sum(p[1,2,:,:],dims=2))
+    s1 = -sum(log.(sum(p[1,2,:,:],dims=1).+1E-100).*sum(p[1,2,:,:],dims=1))
+    s2 = -sum(log.(sum(p[3,4,:,:],dims=2).+1E-100).*sum(p[3,4,:,:],dims=2))
+    s3 = -sum(log.(sum(p[3,4,:,:],dims=1).+1E-100).*sum(p[3,4,:,:],dims=1))
 
     I01 = s0 + s1 - s01
     I02 = s0 + s2 - s02
@@ -186,7 +186,6 @@ end
             quantity[isamp,3] = sum(model.A[:,:,1])
             quantity[isamp,4] = sum(model.A[:,:,2])
             quantity[isamp,5] = sum(model.A[:,:,3])
-            writedlm(io,sum(model.A[:,:,2]))
             quantity[isamp,6] = sum(model.A[:,:,1])^2
             quantity[isamp,7] = sum(model.A[:,:,2])^2
             quantity[isamp,8] = sum(model.A[:,:,3])^2
