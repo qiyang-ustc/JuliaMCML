@@ -1,10 +1,10 @@
 import csv
 number_of_data = 12
-n=4
+n=3
 seed=123
 
-data_file_names = "n=4#123.dat"
-write_file_names = "n=4#123.csv"
+data_file_names = "n=4#1234-temp.dat"
+write_file_names = "n=4#1234-temp.csv"
 
 csvfile = open(write_file_names,'w',newline='')
 datafile = open(data_file_names,'r',errors='ignore')
