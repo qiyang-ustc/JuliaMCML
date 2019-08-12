@@ -1,4 +1,6 @@
 # This jl file include an easy - optional way to measure p
+#--------------------!!!!!-------
+#Please check if this file is included in mehtod.jl
 p = zeros(Int128,layers+1,layers+1,NV,NV)
 weight = [2^(i-1) for i = 1:1:dim]
 
@@ -20,7 +22,7 @@ function number2vector!(v::Array{SpinValueType,1},n::Int)
     v .-= 1
 end
 
-function measure_p!(model::Model,target::Target,p::Array{Int128,4})
+function measure_p!(model::Model,target::Target,p::Array{Int128,4},counts::Int)
     #TODO: This function has not been tested
     v = zeros(SpinValueType,dim)
     temp = zeros(Int,1+layers)
@@ -34,7 +36,7 @@ function measure_p!(model::Model,target::Target,p::Array{Int128,4})
         end 
         for j in 1:1:layers+1
             for k in 1:1:layers+1
-                p[j,k,temp[j],temp[k]]+=1
+                p[j,k,temp[j],temp[k]]+=counts
             end
         end
     end
